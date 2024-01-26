@@ -1,0 +1,13 @@
+{
+  "login": {
+    "validUser": {
+      "success": true,
+      "message": "Login successful!",
+      "token": "your_generated_token"
+    },
+    "invalidUser": {
+      "success": false,
+      "message": "Invalid credentials. Please try again."
+    }
+  }
+}

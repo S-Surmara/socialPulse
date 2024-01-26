@@ -1,0 +1,32 @@
+// Dashboard.scss
+
+.dashboard {
+    display: flex;
+    flex-direction: column; /* Align children vertically */
+    height: 100vh;
+
+    .appBar {
+        position: sticky;
+        top: 0;
+        z-index: 1000; /* Ensure the AppBar is above other elements */
+    }
+
+    .content{
+        display: flex;
+        height: 100%;
+    }
+  
+    .left-pane,
+    .right-pane {
+      width: 20%;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+  
+    .middle-pane {
+      flex: 2;
+      padding: 20px;
+    }
+
+  }
+  

@@ -1,0 +1,12 @@
+[
+    {
+      "id": 1,
+      "text": "This is a sample post.",
+      "image": "path/to/image1.jpg"
+    },
+    {
+      "id": 2,
+      "text": "Another post with an image.",
+      "image": "path/to/image2.jpg"
+    }
+  ]

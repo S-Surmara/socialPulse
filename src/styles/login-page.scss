@@ -1,0 +1,49 @@
+/* styles/login-page.scss */
+.login-page {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)) , url('../utilities/images/original-10d2d512099a31218e8bce53f9ac1d33.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+
+    .content {
+      max-width: 50%;
+      color: #fff;
+      padding: 20px; 
+      border-radius: 8px;
+    }
+  }
+  
+  .login-form {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8); 
+  }
+  
+  .login-form h2 {
+    text-align: center;
+  }
+  
+  .login-form form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .login-form label {
+    margin-bottom: 5px;
+  }
+  
+  .login-form input {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .login-form .btn-primary {
+    width: 100%;
+  }
+  
