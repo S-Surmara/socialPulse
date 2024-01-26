@@ -2,10 +2,23 @@ import React from 'react';
 import './AppBar.scss'; // Import your custom Sass file
 import { useHistory } from 'react-router-dom';
 
-const NavBar: React.FC = () => {
+interface AppBarType {
+  buttonName : string
+}
+
+const NavBar = (props: AppBarType) => {
+  const buttonName = props.buttonName;
   const history = useHistory();
   const handleProfileclick = () => {
-    history.push('/profile');
+    (buttonName === "profile") ? history.push('/profile') : history.push('/');
+  };
+
+  const handleNavBarButton = () => {
+    return(
+      <button type="button" className="profile-button" onClick={handleProfileclick}>
+        <span>{buttonName === "profile"? "Profile" : "logout"}</span>
+      </button>
+    )
   };
 
   return (
@@ -20,10 +33,8 @@ const NavBar: React.FC = () => {
             <button className="search-button" type="submit">Search</button>
           </form>
 
-          {/* Profile icon button */}
-          <button type="button" className="profile-button" onClick={handleProfileclick}>
-            <span>Profile</span>
-          </button>
+          {handleNavBarButton()}
+
         </div>
       </div>
     </nav>

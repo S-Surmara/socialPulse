@@ -1,11 +1,52 @@
 // Dashboard.tsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.scss';
 import AppBar from '../AppBar/AppBar';
 import PostElement from '../PostElement/PostElement';
+import { friendsService } from '../../services/FriendsListService';
+import { useHistory } from 'react-router-dom';
+
+interface FriendList {
+  "id": string,
+  "name": string
+}
 
 const Dashboard: React.FC = () => {
+  const [friendsList, setFriendsList] = useState<FriendList[]>([]);
+  const [searchInput, setSearchInput] = useState<string>('');
+  const history = useHistory(); // Initialize useHistory
+
+  useEffect(() => {
+    const fetchFriendsList = async () => {
+      try {
+        const response = friendsService.getFriendsListJson();
+        setFriendsList(response);
+      } catch (error) {
+        console.error('Error fetching Friends list:', error);
+      }
+    };
+
+    fetchFriendsList();
+  }, []);
+
+  const navigateToProfile = (friendId: string, friendName: string) => {
+    // Use history.push to navigate to the profile page with user ID and name as URL params
+    history.push(`/profile?id=${friendId}&name=${encodeURIComponent(friendName)}`);
+  };
+
+  const renderFriendsList = () => (
+    <>
+      {friendsList.map((friend) => (
+        friend.name.toLowerCase().includes(searchInput.toLowerCase()) ?
+          <div className="post-container" key={friend.id} onClick={() => navigateToProfile(friend.id, friend.name)}>
+            <p className="post-text">{friend.name}</p>
+          </div>
+          :
+          <></>
+      ))}
+    </>
+  );
 
   const renderLeftPane = () => {
     return (
@@ -36,13 +77,16 @@ const Dashboard: React.FC = () => {
     return (
       <div className="right-pane">
         <div className="search-bar">
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
         </div>
 
         <div className="friends-list">
-          <p>Friend 1</p>
-          <p>Friend 2 </p>
-          {/* Add more friends as needed */}
+          {renderFriendsList()}
         </div>
       </div>
     );
@@ -51,7 +95,7 @@ const Dashboard: React.FC = () => {
     <div className="dashboard">
       {/* AppBar */}
       <div className='appBar'>
-        <AppBar />
+        <AppBar buttonName="profile" />
       </div>
 
       {/* Rest of the dashboard content */}

@@ -32,7 +32,6 @@ export const postService = {
   getUserPostsJson: async () => {
     try {
       // For now, simulate fetching posts from a JSON file
-      debugger
       const response = await axios.get('/posts.json');
       return response.data;
     } catch (error) {
