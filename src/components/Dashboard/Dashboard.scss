@@ -24,6 +24,40 @@
       background-color: #f0f0f0;
       size: 255px;
     }
+
+    // YourComponent.scss
+
+    .right-pane {
+      border: 1px solid #dee2e6; // Bootstrap border color
+
+      .search-bar {
+        margin-bottom: 20px;
+
+        input {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ced4da; // Bootstrap border color
+          border-radius: 4px;
+        }
+      }
+
+      .friends-list {
+
+        .post-container {
+          padding: 10px;
+          margin-bottom: 10px;
+          background-color: #fff; 
+          border: 1px solid #dee2e6; // Bootstrap border color
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .post-text {
+          font-size: 16px;
+          // Add other text styling as needed
+        }
+      }
+    }
   
     .middle-pane {
       flex: 2;
