@@ -2,11 +2,11 @@
     {
       "id": 1,
       "text": "This is a sample post.",
-      "image": "path/to/image1.jpg"
+      "image": "https://cdn.shopify.com/s/files/1/0070/7032/files/Fearless_Motivational_Quote_Desktop_Wallpaper_1.png?v=1600450412"
     },
     {
       "id": 2,
       "text": "Another post with an image.",
-      "image": "path/to/image2.jpg"
+      "image": "https://static-cse.canva.com/blob/1145118/GreenQuoteSocialMediaGraphic.png"
     }
   ]
