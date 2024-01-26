@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
 
         <div className="friends-list">
           <p>Friend 1</p>
-          <p>Friend 2</p>
+          <p>Friend 2 </p>
           {/* Add more friends as needed */}
         </div>
       </div>
