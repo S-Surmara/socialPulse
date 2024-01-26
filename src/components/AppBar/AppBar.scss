@@ -14,9 +14,10 @@
   
   .logo {
     text-decoration: none;
-    color: #fff;
+    color: blue($color: #000000);
     font-size: 20px;
     font-weight: bold;
+    margin-left: -80px;
   }
   
   .nav-items {
@@ -47,5 +48,6 @@
     color: #333;
     border: none;
     cursor: pointer;
+    margin-left: 5px;
   }
   

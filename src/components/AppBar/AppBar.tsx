@@ -11,7 +11,7 @@ const NavBar: React.FC = () => {
   return (
     <nav className="custom-navbar">
       <div className="container">
-        <a className="logo" href="#">Your Logo</a>
+        <a className="logo" href="#">My Logo</a>
 
         <div className="nav-items">
           {/* Search bar form */}
