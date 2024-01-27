@@ -14,8 +14,7 @@ const LoginForm: React.FC = () => {
 
     try {
       const response = await ApiService.login(email, password);
-
-      if (response.success) {
+      if (response.response === "success") {
         console.log('redirecting to dashboard...');
         // Redirect to the dashboard page on successful login
         history.push('/dashboard');
