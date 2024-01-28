@@ -5,18 +5,22 @@ import Home from './screens/Home';
 import Dashboard from './components/Dashboard/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProfilePage from './screens/ProfilePage';
+import { AuthProvider } from './authContext';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/profile" component={ProfilePage} />
-        </Switch>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/profile" component={ProfilePage} />
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
