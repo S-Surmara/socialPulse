@@ -34,7 +34,6 @@ const NavBar = (props: AppBarType) => {
           </form>
 
           {handleNavBarButton()}
-
         </div>
       </div>
     </nav>
