@@ -4,9 +4,11 @@ import './LoginForm.scss';
 import '../../styles/login-page.scss';
 import { useHistory } from 'react-router-dom';
 import ApiService from '../../services/ApiService';
+import { useAuth } from '../../authContext';
 
 const LoginForm: React.FC = () => {
   const history = useHistory();
+  const { login } = useAuth();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = (e.target as any).elements.email.value;
@@ -15,6 +17,7 @@ const LoginForm: React.FC = () => {
     try {
       const response = await ApiService.login(email, password);
       if (response.response === "success") {
+        login();
         console.log('redirecting to dashboard...');
         // Redirect to the dashboard page on successful login
         history.push('/dashboard');

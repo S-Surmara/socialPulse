@@ -9,7 +9,6 @@ const ApiService = {
     // uncomment below code when actual service is created 
 
     try {
-      debugger
       const response = await axios.post(`${apiUrl}/login`, { username: email, password });
       return response.data;
     } catch (error) {
@@ -38,7 +37,6 @@ const ApiService = {
   },
 
   signup: async (email: string, password: string, confirmPassword: string) => {
-    debugger
     try {
       // Check if password and confirmPassword match
       if (password !== confirmPassword) {
