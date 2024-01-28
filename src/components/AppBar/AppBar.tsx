@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
 
           {/* Profile icon button */}
           <button type="button" className="profile-button" onClick={handleProfileclick}>
-            <span>Profile</span>
+            <span>P</span>
           </button>
         </div>
       </div>
