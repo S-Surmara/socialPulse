@@ -1,7 +1,6 @@
-// PostService.ts
 import axios from 'axios';
 
-const BASE_URL = 'your_backend_base_url';
+const BASE_URL = 'http://localhost:8080';
 
 export const postService = {
   createPost: async (postData: FormData) => {
@@ -38,5 +37,5 @@ export const postService = {
       console.error('Error fetching user posts:', error);
       throw error;
     }
-  }
+  },
 };
