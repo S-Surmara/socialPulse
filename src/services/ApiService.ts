@@ -36,6 +36,22 @@ const ApiService = {
     //   }
 
   },
+
+  signup: async (email: string, password: string, confirmPassword: string) => {
+    debugger
+    try {
+      // Check if password and confirmPassword match
+      if (password !== confirmPassword) {
+        throw new Error('Password and Confirm Password do not match');
+      }
+
+      const response = await axios.post(`${apiUrl}/signup`, { username: email, password });
+      return response.data;
+    } catch (error) {
+      console.error('Error during signup:', error);
+      throw error;
+    }
+  },
 };
 
 export default ApiService;
