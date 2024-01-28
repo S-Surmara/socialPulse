@@ -35,7 +35,7 @@ const NavBar = (props: AppBarType) => {
 
           {handleNavBarButton()}
           <button type="button" className="profile-button" onClick={handleProfileclick}>
-            <span>Profile</span>
+            <span>P</span>
           </button>
 
         </div>
