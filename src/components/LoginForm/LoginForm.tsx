@@ -5,8 +5,10 @@ import '../../styles/login-page.scss';
 import { useHistory } from 'react-router-dom';
 import ApiService from '../../services/ApiService';
 import { useAuth } from '../../authContext';
+import { useCookies } from 'react-cookie';
 
 const LoginForm: React.FC = () => {
+  const [cookies, setCookie] = useCookies();
   const history = useHistory();
   const { login } = useAuth();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,6 +19,7 @@ const LoginForm: React.FC = () => {
     try {
       const response = await ApiService.login(email, password);
       if (response.response === "success") {
+        setCookie('userId' , response.userId);
         login();
         console.log('redirecting to dashboard...');
         // Redirect to the dashboard page on successful login
