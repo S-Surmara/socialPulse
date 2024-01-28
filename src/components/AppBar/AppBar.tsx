@@ -34,6 +34,9 @@ const NavBar = (props: AppBarType) => {
           </form>
 
           {handleNavBarButton()}
+          <button type="button" className="profile-button" onClick={handleProfileclick}>
+            <span>Profile</span>
+          </button>
 
         </div>
       </div>
