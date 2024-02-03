@@ -58,7 +58,10 @@ const NavBar = (props: AppBarType) => {
   return (
     <nav className="custom-navbar">
       <div className="container">
-        <a className="logo" href="#">My Logo</a>
+        <a className="logo" href="#">
+        <img className='Logoimage' src='../../logo.png' alt='Social Pulse logo' style={{ width: '40px', height: 'auto' ,borderRadius: '50%'}} />
+
+        </a>
 
         <div className="nav-items">
           {/* Search bar form */}
