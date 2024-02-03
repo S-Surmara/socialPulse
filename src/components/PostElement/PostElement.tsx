@@ -31,8 +31,6 @@ const PostElement: React.FC = () => {
       const formData = new FormData();
       formData.append('text', postText);
       formData.append('image', selectedImage || ''); // Ensure 'image' is not undefined
-
-      debugger
       const userId = cookies['userId'];
       formData.append('userId',userId);
 

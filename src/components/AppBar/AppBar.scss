@@ -26,12 +26,16 @@
   }
   
   .search-form {
+    position: relative;
     display: flex;
   }
   
   .search-input {
+    width: 200px;
     padding: 5px;
     margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
   .search-button {
@@ -51,3 +55,44 @@
     margin-left: 5px;
   }
   
+  .suggestions-list {
+    position: absolute;
+    top: 100%; /* Position the suggestion list below the input box */
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    background-color: #fff;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1; /* Ensure the suggestion list appears above other elements */
+  }
+  
+  .suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .suggestion-name {
+    font-size: 16px; /* Adjust font size for the name */
+    font-weight: bold;
+  }
+  
+  .suggestion-username {
+    font-size: 14px; /* Adjust font size for the username */
+    color: #777; /* Adjust color for the username */
+  }
+  
+  .suggestions-list li:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* Adjust the font color */
+.search-input,
+.suggestions-list li {
+  color: #333;
+}
