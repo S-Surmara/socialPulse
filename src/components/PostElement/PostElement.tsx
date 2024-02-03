@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './PostElement.scss';
 import { postService } from '../../services/PostService';
-import { useCookies } from 'react-cookie';
+import { useCustomCookie } from '../../lib/cookie';
 
 const PostElement: React.FC = () => {
-  const [cookies] = useCookies();
+  const { get } = useCustomCookie();
   const [postText, setPostText] = useState('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imageUploaded, setImageUploaded] = useState(false);
@@ -31,8 +31,10 @@ const PostElement: React.FC = () => {
       const formData = new FormData();
       formData.append('text', postText);
       formData.append('image', selectedImage || ''); // Ensure 'image' is not undefined
-      const userId = cookies['userId'];
-      formData.append('userId',userId);
+      // const userId = cookies['userId'];
+      let username = get('username');
+      formData.append('username',username);
+      // formData.append('userId',userId);
 
       await postService.createPost(formData);
       // Reset postText and selectedImage after successful post

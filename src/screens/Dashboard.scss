@@ -16,17 +16,13 @@
         height: 100%;
         padding: 10px;
     }
-  
-    .left-pane,
-    .right-pane {
-      width: 20%;
-      padding: 20px;
-      background-color: #f8f9fa;
-    }
 
     // YourComponent.scss
 
-    .right-pane {
+    .left-pane {
+      width: 20%;
+      padding: 20px;
+      background-color: #f8f9fa;
       border: 1px solid #dee2e6; // Bootstrap border color
 
       .search-bar {

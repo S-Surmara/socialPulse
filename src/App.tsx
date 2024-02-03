@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './screens/Home';
-import Dashboard from './components/Dashboard/Dashboard';
+import Dashboard from './screens/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProfilePage from './screens/ProfilePage';
 import { AuthProvider } from './authContext';

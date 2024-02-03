@@ -18,9 +18,10 @@ export const postService = {
     }
   },
 
-  getUserPosts: async () => {
+  getUserPosts: async (username: string) => {
     try {
-      const response = await axios.get(`${BASE_URL}/user/posts`);
+      const url = `${BASE_URL}/user/${username}`;
+      const response = await axios.get(url);
       return response.data;
     } catch (error) {
       console.error('Error fetching user posts:', error);

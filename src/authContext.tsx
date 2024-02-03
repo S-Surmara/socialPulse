@@ -1,6 +1,7 @@
 // authContext.ts
 import { createContext, useContext, useState, ReactNode } from 'react';
 import * as React from 'react';
+import { useCustomCookie } from './lib/cookie';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -16,6 +17,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const { remove } = useCustomCookie();
 
   const login = () => {
     // Implement your authentication logic and set isAuthenticated to true
@@ -24,6 +26,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     // Implement your logout logic and set isAuthenticated to false
+    remove('username');
     setAuthenticated(false);
   };
 
