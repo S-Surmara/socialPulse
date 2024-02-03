@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AppBar.scss'; // Import your custom Sass file
 import { useHistory } from 'react-router-dom';
+import UsersService from '../../services/UsersService';
 
 interface AppBarType {
   buttonName : string
@@ -28,32 +29,22 @@ const NavBar = (props: AppBarType) => {
     )
   };
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     setSearchInput(input);
 
     //TODO : get from service call . 
-    const fakeSuggestions = [
-      {
-        name: 'Subham Surmara',
-        username: 'surmara'
-      },
-      {
-        name: 'Manish Manchala',
-        username: 'manchala'
-      },
-      {
-        name: 'Ambati Pavan',
-        username: 'ambatipavan'
-      },
-      {
-        name: 'Aditya Singh',
-        username: 'singhIsKing'
-      }
-    ];
+    let response = null;
+    try{
+      response = await UsersService.getUserList();
+    } catch{
+      alert("error while fetching users list");
+    }
+      
+    const suggestions: SuggestedUser[]  = response;
 
     setSuggestions(
-      fakeSuggestions.filter(
+      suggestions?.filter(
         (user) =>
           user.name.toLowerCase().includes(input.toLowerCase()) ||
           user.username.toLowerCase().includes(input.toLowerCase())
@@ -62,10 +53,10 @@ const NavBar = (props: AppBarType) => {
   };
 
   const renderSuggestionList = () => {
-    if(!suggestions.length || !searchInput.length) return (<></>);  
+    if(!suggestions?.length || !searchInput.length) return (<></>);  
     return (
       <ul className="suggestions-list">
-        {suggestions.map((user) => (
+        {suggestions?.map((user) => (
           <li key={user.username} onClick={() => handleProfileClick(user.username)}>
             <div className="suggestion-name">{user.name}</div>
             <div className="suggestion-username">@{user.username}</div>

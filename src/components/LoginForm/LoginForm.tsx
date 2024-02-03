@@ -3,7 +3,7 @@ import React from 'react';
 import './LoginForm.scss';
 import '../../styles/login-page.scss';
 import { useHistory } from 'react-router-dom';
-import ApiService from '../../services/ApiService';
+import ApiService from '../../services/AuthService';
 import { useAuth } from '../../authContext';
 import { useCookies } from 'react-cookie';
 
