@@ -6,14 +6,21 @@ import AppBar from '../AppBar/AppBar';
 import PostElement from '../PostElement/PostElement';
 import { friendsService } from '../../services/FriendsListService';
 import { useHistory } from 'react-router-dom';
+import UsersService from '../../services/UsersService';
 
-interface FriendList {
+export interface FriendList {
   "id": string,
   "name": string
 }
 
+export interface UsersList {
+  "name": string;
+  "username": string;
+}
+
 const Dashboard: React.FC = () => {
   const [friendsList, setFriendsList] = useState<FriendList[]>([]);
+  const [usersList , setUsersList] = useState<UsersList[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const history = useHistory(); // Initialize useHistory
 
@@ -23,11 +30,21 @@ const Dashboard: React.FC = () => {
         const response = friendsService.getFriendsListJson();
         setFriendsList(response);
       } catch (error) {
-        console.error('Error fetching Friends list:', error);
+        alert('Error fetching Friends list:');
       }
     };
 
+    const fetchUsersList = async () => {
+      try{
+        const response = await UsersService.getUserList();
+        setUsersList(response);
+      } catch{
+        alert("error while fetching users list");
+      }
+    }
+
     fetchFriendsList();
+    fetchUsersList();
   }, []);
 
   const navigateToProfile = (friendId: string, friendName: string) => {
@@ -95,7 +112,7 @@ const Dashboard: React.FC = () => {
     <div className="dashboard">
       {/* AppBar */}
       <div className='appBar'>
-        <AppBar buttonName="profile" />
+        <AppBar buttonName="profile" usersList= {usersList} />
       </div>
 
       {/* Rest of the dashboard content */}

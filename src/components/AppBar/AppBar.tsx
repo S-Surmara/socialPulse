@@ -2,19 +2,16 @@ import React, { useState } from 'react';
 import './AppBar.scss'; // Import your custom Sass file
 import { useHistory } from 'react-router-dom';
 import UsersService from '../../services/UsersService';
+import { UsersList } from '../Dashboard/Dashboard';
 
-interface AppBarType {
+export interface AppBarType {
+  usersList?: UsersList[],
   buttonName : string
-}
-
-interface SuggestedUser {
-  name: string,
-  username: string
 }
 
 const NavBar = (props: AppBarType) => {
   const [searchInput, setSearchInput] = useState<string>('');
-  const [suggestions, setSuggestions] = useState<SuggestedUser[]>([]);
+  const [suggestions, setSuggestions] = useState<UsersList[] | undefined>([]);
   const buttonName = props.buttonName;
   const history = useHistory();
   const handleProfileClick = (profileName: string) => {
@@ -32,16 +29,8 @@ const NavBar = (props: AppBarType) => {
   const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     setSearchInput(input);
-
-    //TODO : get from service call . 
-    let response = null;
-    try{
-      response = await UsersService.getUserList();
-    } catch{
-      alert("error while fetching users list");
-    }
       
-    const suggestions: SuggestedUser[]  = response;
+    const suggestions: UsersList[] | undefined  = props.usersList;
 
     setSuggestions(
       suggestions?.filter(
