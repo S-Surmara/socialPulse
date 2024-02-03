@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './SignupForm.scss';
 import '../../styles/login-page.scss';
-import ApiService from '../../services/ApiService';
+import ApiService from '../../services/AuthService';
 import { useHistory } from 'react-router-dom';
 
 const SignupForm: React.FC = () => {
