@@ -13,11 +13,11 @@ const LoginForm: React.FC = () => {
   const { login } = useAuth();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const email = (e.target as any).elements.email.value;
+    const username = (e.target as any).elements.username.value;
     const password = (e.target as any).elements.password.value;
 
     try {
-      const response = await ApiService.login(email, password);
+      const response = await ApiService.login(username, password);
       if (response.response === "success") {
         setCookie('userId' , response.userId);
         login();
@@ -40,10 +40,10 @@ const LoginForm: React.FC = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email address
+          <label htmlFor="username" className="form-label">
+            Username
           </label>
-          <input type="email" className="form-control" id="email" />
+          <input type="text" className="form-control" id="username" />
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">

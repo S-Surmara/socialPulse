@@ -10,6 +10,8 @@ const SignupForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState(''); // Add username state
+  const [name, setName] = useState(''); // Add name state
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,10 +23,10 @@ const SignupForm: React.FC = () => {
     }
 
     try {
-      const response = await ApiService.signup(email, password , confirmPassword);
-      if (response.response === "success") {
+      const response = await ApiService.signup(email, password, confirmPassword, username, name);
+      if (response.response === 'success') {
         console.log('redirecting to dashboard...');
-        // TODO : Change logic for signup : should redirect to login again not dashboard
+        // TODO: Change logic for signup: should redirect to login again not dashboard
         history.push('/dashboard');
       } else {
         // Handle unsuccessful signup (show error message, etc.)
@@ -41,7 +43,7 @@ const SignupForm: React.FC = () => {
     <div className="signup-form">
       <h2>Signup</h2>
       <form onSubmit={handleSignup}>
-        <div className="mb-3">
+                <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email address
           </label>
@@ -51,6 +53,30 @@ const SignupForm: React.FC = () => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="mb-3">
