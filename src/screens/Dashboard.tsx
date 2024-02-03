@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import './Dashboard.scss';
-import AppBar from '../AppBar/AppBar';
-import PostElement from '../PostElement/PostElement';
-import { friendsService } from '../../services/FriendsListService';
+import AppBar from '../components/AppBar/AppBar';
+import PostElement from '../components/PostElement/PostElement';
+import { friendsService } from '../services/FriendsListService';
 import { useHistory } from 'react-router-dom';
-import UsersService from '../../services/UsersService';
+import UsersService from '../services/UsersService';
 
 export interface FriendList {
   "id": string,
@@ -68,11 +68,17 @@ const Dashboard: React.FC = () => {
   const renderLeftPane = () => {
     return (
       <div className="left-pane">
-        {/* Navigation Icons */}
-        <div className="navigation-icons">
-          <p>Icon 1</p>
-          <p>Icon 2</p>
-          <p>Icon 3</p>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        </div>
+
+        <div className="friends-list">
+          {renderFriendsList()}
         </div>
       </div>
     );
@@ -89,25 +95,6 @@ const Dashboard: React.FC = () => {
       </div>
     );
   };
-
-  const renderRightPane = () => {
-    return (
-      <div className="right-pane">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </div>
-
-        <div className="friends-list">
-          {renderFriendsList()}
-        </div>
-      </div>
-    );
-  };
   return (
     <div className="dashboard">
       {/* AppBar */}
@@ -119,7 +106,6 @@ const Dashboard: React.FC = () => {
       <div className='content'>
         {renderLeftPane()}
         {renderMiddlePane()}
-        {renderRightPane()}
       </div>
     </div>
   );

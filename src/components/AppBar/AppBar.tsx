@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './AppBar.scss'; // Import your custom Sass file
 import { useHistory } from 'react-router-dom';
 import UsersService from '../../services/UsersService';
-import { UsersList } from '../Dashboard/Dashboard';
+import { UsersList } from '../../screens/Dashboard';
+import { useCustomCookie } from '../../lib/cookie';
 
 export interface AppBarType {
   usersList?: UsersList[],
@@ -12,15 +13,17 @@ export interface AppBarType {
 const NavBar = (props: AppBarType) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [suggestions, setSuggestions] = useState<UsersList[] | undefined>([]);
+  const { get } = useCustomCookie();
   const buttonName = props.buttonName;
   const history = useHistory();
   const handleProfileClick = (profileName: string) => {
-    (buttonName === "profile") ? history.push(`/profile/${profileName}`) : history.push('/');
+    (buttonName === "profile") ? history.push(`/profile?user=${profileName}`) : history.push('/');
   };
 
   const handleNavBarButton = () => {
+    const username = get('username');
     return(
-      <button type="button" className="profile-button" onClick={() => handleProfileClick('self')}>
+      <button type="button" className="profile-button" onClick={() => handleProfileClick(username)}>
         <span>{buttonName === "profile"? "Profile" : "logout"}</span>
       </button>
     )
