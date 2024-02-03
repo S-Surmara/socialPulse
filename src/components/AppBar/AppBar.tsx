@@ -21,7 +21,7 @@ const NavBar = (props: AppBarType) => {
   const handleNavBarButton = () => {
     return(
       <button type="button" className="profile-button" onClick={() => handleProfileClick('self')}>
-        <span>{buttonName === "profile"? "Profile" : "logout"}</span>
+        <span>{buttonName === "profile"? "P" : "logout"}</span>
       </button>
     )
   };

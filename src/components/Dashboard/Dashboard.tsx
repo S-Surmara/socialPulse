@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
       {friendsList.map((friend) => (
         friend.name.toLowerCase().includes(searchInput.toLowerCase()) ?
           <div className="post-container" key={friend.id} onClick={() => navigateToProfile(friend.id, friend.name)}>
-            <p className="post-text">{friend.name}</p>
+          <button type="button" className="friend-profile-button" ></button>  <span className="post-text">{friend.name}</span>
           </div>
           :
           <></>
