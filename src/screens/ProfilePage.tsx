@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { postService } from '../services/PostService';
 import './ProfilePage.scss';
 import AppBar from '../components/AppBar/AppBar';
-import { useProfileParams } from '../utilities/urlParams';
+import { useProfileParams } from '../lib/urlParams';
 import { useLocation } from 'react-router-dom';
+import { useCustomCookie } from '../lib/cookie';
+import { friendshipService } from '../services/FriendshipService';
 
 // Define a type for a single post
 type Post = {
@@ -17,27 +19,25 @@ type Post = {
 
 const ProfilePage: React.FC = () => {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
-  const { id, name } = useProfileParams();
+  const { profileName, profileId } = useProfileParams();
+  const [ frndReq , setFrndReq ] = useState<'success' | 'reject' | 'pending'>('reject');
+  const [ disableFrndReq , setDisableFrndReq ] = useState(true);
   const location = useLocation();
-
-  const convertByteArrayToDataUrl = (byteArray: number[] | undefined) => {
-    debugger
-    if (!byteArray || byteArray.length === 0) {
-      return '';  // Return an empty string if byteArray is undefined or empty
-    }
-  
-    const blob = new Blob([new Uint8Array(byteArray)], { type: 'image/jpeg' });
-    const dataUrl = URL.createObjectURL(blob);
-  
-    return dataUrl;
-  };
-  
+  const { get } = useCustomCookie();
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const username = queryParams.get('user') || '';
+    const userId = parseInt(get('userId') , 10);
+    if(frndReq === 'reject' && userId!= profileId){
+      setDisableFrndReq(false);
+    } else{
+      setDisableFrndReq(true);
+    }
+  },[]);
+
+
+  useEffect(() => {
+    const username = profileName || '';
     const fetchUserPosts = async () => {
-      debugger
       try {
         const data = await postService.getUserPosts(username);
         const postsWithImageData = data.map((post: Post) => {
@@ -53,17 +53,23 @@ const ProfilePage: React.FC = () => {
     fetchUserPosts();
   }, [location.search]);
 
-  useEffect(() => {
-    // Use userId and friendName in your component logic
-    console.log('User ID:', id);
-    console.log('Friend Name:', name);
-  }, [id, name]);
+  const handleAddFriendClick = async () => {
+    const userId = parseInt(get('userId') , 10);
+    const friendId = profileId;
+    let response = userId && friendId && await friendshipService.sendFriendRequest(userId,friendId);
+    response && response.response === "success" && setFrndReq('pending');
+    setDisableFrndReq(true);
+    console.log(frndReq);
+  };
 
   return (
     <>
       <AppBar buttonName='logOut'></AppBar>
       <div className="profile-container">
-        <h1 className="profile-header">Your Profile</h1>
+        <h1 className="profile-header">{profileName} Profile</h1>
+        <button className="add-friend-button" onClick={handleAddFriendClick} disabled={disableFrndReq}>
+                {frndReq==="pending" ? <p>Pending</p> : <p>Add Friend</p>}
+        </button>
         {userPosts.map((post) => (
           <div className="post-container" key={post.id}>
             <p className="post-text">{post.text}</p>
