@@ -14,6 +14,7 @@ export interface FriendList {
 }
 
 export interface UsersList {
+  "id": number,
   "name": string;
   "username": string;
 }

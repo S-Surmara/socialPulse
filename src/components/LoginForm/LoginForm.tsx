@@ -21,6 +21,7 @@ const LoginForm: React.FC = () => {
       if (response.response === "success") {
         // setCookie('userId' , response.userId);
         set('username',username);
+        set('userId' , response.userId);
         login();
         console.log('redirecting to dashboard...');
         // Redirect to the dashboard page on successful login

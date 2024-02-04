@@ -16,14 +16,15 @@ const NavBar = (props: AppBarType) => {
   const { get } = useCustomCookie();
   const buttonName = props.buttonName;
   const history = useHistory();
-  const handleProfileClick = (profileName: string) => {
-    (buttonName === "profile") ? history.push(`/profile?user=${profileName}`) : history.push('/');
+  const handleProfileClick = (id: number , profileName: string) => {
+    if(id<0) id = parseInt(get('userId'),10);
+    (buttonName === "profile") ? history.push(`/profile?s=s&profileId=${id}&profileName=${profileName}`) : history.push('/');
   };
 
   const handleNavBarButton = () => {
     const username = get('username');
     return(
-      <button type="button" className="profile-button" onClick={() => handleProfileClick(username)}>
+      <button type="button" className="profile-button" onClick={() => handleProfileClick(-1,username)}>
         <span>{buttonName === "profile"? "Profile" : "logout"}</span>
       </button>
     )
@@ -49,7 +50,7 @@ const NavBar = (props: AppBarType) => {
     return (
       <ul className="suggestions-list">
         {suggestions?.map((user) => (
-          <li key={user.username} onClick={() => handleProfileClick(user.username)}>
+          <li key={user.username} onClick={() => handleProfileClick(user.id , user.username)}>
             <div className="suggestion-name">{user.name}</div>
             <div className="suggestion-username">@{user.username}</div>
           </li>
