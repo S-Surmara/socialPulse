@@ -15,6 +15,7 @@ type CookieHook = {
   get: (name: string) => string;
   set: (name: string,value: string, options?: CookieOptions) => void;
   remove: (name: string) => void;
+  clear: () => void;
 };
 
 export const useCustomCookie = (): CookieHook => {
@@ -30,9 +31,15 @@ export const useCustomCookie = (): CookieHook => {
     removeCookie(name);
   };
 
+  const clear = () => {
+    const cookieKeys: string[] = cookies.getAll(); 
+    cookieKeys.forEach((key:string) => cookies.remove(key)); 
+  };
+
   return {
     get,
     set,
-    remove
+    remove,
+    clear
   };
 };

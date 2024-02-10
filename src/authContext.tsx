@@ -16,17 +16,18 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const { remove } = useCustomCookie();
+  const [isAuthenticated, setAuthenticated] = useState(() => sessionStorage.getItem('isAuthenticated') === 'true');
+  const { get,clear } = useCustomCookie();
 
   const login = () => {
     // Implement your authentication logic and set isAuthenticated to true
     setAuthenticated(true);
+    sessionStorage.setItem('isAuthenticated', 'true');
   };
 
   const logout = () => {
     // Implement your logout logic and set isAuthenticated to false
-    remove('username');
+    clear();
     setAuthenticated(false);
   };
 
