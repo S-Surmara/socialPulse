@@ -7,10 +7,15 @@ import PostElement from '../components/PostElement/PostElement';
 import { friendsService } from '../services/FriendsListService';
 import { useHistory } from 'react-router-dom';
 import UsersService from '../services/UsersService';
+import { useCustomCookie } from '../lib/cookie';
+import { postService } from '../services/PostService';
+import { Post } from './ProfilePage';
 
 export interface FriendList {
-  "id": string,
-  "name": string
+  "id": number,
+  "name": string,
+  "username": string,
+  "email": string
 }
 
 export interface UsersList {
@@ -21,36 +26,64 @@ export interface UsersList {
 
 const Dashboard: React.FC = () => {
   const [friendsList, setFriendsList] = useState<FriendList[]>([]);
-  const [usersList , setUsersList] = useState<UsersList[]>([]);
+  const [usersList, setUsersList] = useState<UsersList[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
+  const [friendsPost, setFriendsPosts] = useState<Post[][]>([]);
   const history = useHistory(); // Initialize useHistory
+  const { get } = useCustomCookie();
 
   useEffect(() => {
+    const userId = get('userId');
     const fetchFriendsList = async () => {
       try {
-        const response = friendsService.getFriendsListJson();
-        setFriendsList(response);
+        const response = await friendsService.getFrirndsList(parseInt(userId));
+        setFriendsList(response?.data);
       } catch (error) {
         alert('Error fetching Friends list:');
       }
     };
 
     const fetchUsersList = async () => {
-      try{
+      try {
         const response = await UsersService.getUserList();
         setUsersList(response);
-      } catch{
+      } catch {
         alert("error while fetching users list");
       }
     }
 
     fetchFriendsList();
     fetchUsersList();
+    console.log('friends list=', friendsList)
   }, []);
 
-  const navigateToProfile = (friendId: string, friendName: string) => {
+  useEffect(() => {
+    const fetchFriendsPosts = async () => {
+      const newPosts = await Promise.all(
+        friendsList.map(async (friend) => {
+          try {
+            const data = await postService.getUserPosts(friend.username);
+            return data.map((post: Post) => {
+              const imageDataUrl = "data:image/png;base64," + post.image;
+              return { ...post, imageDataUrl };
+            });
+          } catch (error) {
+            console.error('Error fetching user posts:', error);
+            return [];
+          }
+        })
+      );
+
+      setFriendsPosts((prevPosts) => [...prevPosts, ...newPosts]);
+    };
+
+    fetchFriendsPosts();
+  }, [friendsList]);
+
+
+  const navigateToProfile = (friendId: number, friendName: string) => {
     // Use history.push to navigate to the profile page with user ID and name as URL params
-    history.push(`/profile?id=${friendId}&name=${encodeURIComponent(friendName)}`);
+    history.push(`/profile?s=s&profileId=${friendId}&profileName=${encodeURIComponent(friendName)}`);
   };
 
   const renderFriendsList = () => (
@@ -58,7 +91,8 @@ const Dashboard: React.FC = () => {
       {friendsList.map((friend) => (
         friend.name.toLowerCase().includes(searchInput.toLowerCase()) ?
           <div className="post-container" key={friend.id} onClick={() => navigateToProfile(friend.id, friend.name)}>
-            <p className="post-text">{friend.name}</p>
+            <div className="friend-name">{friend.name}</div>
+            <div className="friend-username">@{friend.username}</div>
           </div>
           :
           <></>
@@ -85,6 +119,23 @@ const Dashboard: React.FC = () => {
     );
   };
 
+  const renderFriendsPosts = () => {
+    return (
+      <>
+        {friendsPost.map((friendPosts) => (
+          friendPosts.map((post) => (
+            <div className="post-container" key={post.id}>
+              <p>@{post.username}</p>
+              <p className="post-text">{post.text}</p>
+              {post.image && <img className="post-image" src={post.imageDataUrl} alt="Post" />}
+            </div>
+          ))
+        ))}
+      </>
+    );
+  };
+
+
   const renderMiddlePane = () => {
     return (
       <div className="middle-pane">
@@ -92,6 +143,7 @@ const Dashboard: React.FC = () => {
         <div className="posts">
           <h2>Posts from Friends</h2>
           {/* Add your post components here */}
+          {renderFriendsPosts()}
         </div>
       </div>
     );
@@ -100,7 +152,7 @@ const Dashboard: React.FC = () => {
     <div className="dashboard">
       {/* AppBar */}
       <div className='appBar'>
-        <AppBar buttonName="profile" usersList= {usersList} />
+        <AppBar buttonName="profile" usersList={usersList} />
       </div>
 
       {/* Rest of the dashboard content */}

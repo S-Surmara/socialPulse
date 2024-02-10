@@ -9,7 +9,7 @@ import { useCustomCookie } from '../lib/cookie';
 import { friendshipService } from '../services/FriendshipService';
 
 // Define a type for a single post
-type Post = {
+export type Post = {
   id: number;
   text: string;
   image?: number[]; // Optional image property
