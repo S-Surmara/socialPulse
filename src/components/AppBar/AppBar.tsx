@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import UsersService from '../../services/UsersService';
 import { UsersList } from '../../screens/Dashboard';
 import { useCustomCookie } from '../../lib/cookie';
+import { useAuth } from '../../authContext';
 
 export interface AppBarType {
   usersList?: UsersList[],
@@ -13,10 +14,12 @@ export interface AppBarType {
 const NavBar = (props: AppBarType) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [suggestions, setSuggestions] = useState<UsersList[] | undefined>([]);
+  const { logout } = useAuth();
   const { get } = useCustomCookie();
   const buttonName = props.buttonName;
   const history = useHistory();
   const handleProfileClick = (id: number , profileName: string) => {
+    if(buttonName !== 'profile') logout();
     if(id<0) id = parseInt(get('userId'),10);
     (buttonName === "profile") ? history.push(`/profile?s=s&profileId=${id}&profileName=${profileName}`) : history.push('/');
   };
@@ -61,11 +64,10 @@ const NavBar = (props: AppBarType) => {
 
   return (
     <nav className="custom-navbar">
-      <div className="container">
-        <a className="logo" href="#">
-        <img className='Logoimage' src='../../logo.png' alt='Social Pulse logo' style={{ width: '40px', height: 'auto' ,borderRadius: '50%'}} />
-
-        </a>
+      <div className="appBar-container">
+        <div className="logo" >
+          <img className='Logoimage' src='../../logo.png' alt='Social Pulse logo' style={{ width: '40px', height: 'auto' ,borderRadius: '50%'}} />
+        </div>
 
         <div className="nav-items">
           {/* Search bar form */}

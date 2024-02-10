@@ -6,7 +6,7 @@
     padding: 10px 0;
   }
   
-  .container {
+  .appBar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,21 +17,23 @@
     color: blue($color: #000000);
     font-size: 20px;
     font-weight: bold;
-    margin-left: -80px;
+    margin-left: 50px;
   }
   
   .nav-items {
     display: flex;
     align-items: center;
+    width: 72%;
   }
   
   .search-form {
     position: relative;
     display: flex;
+    width: 95%;
   }
   
   .search-input {
-    width: 200px;
+    width: 70%;
     padding: 5px;
     margin-right: 5px;
     border: 1px solid #ccc;
@@ -48,19 +50,26 @@
   
   .profile-button {
     padding: 5px 10px;
-    background-color: #fff;
-    color: #333;
+    color: #fff;
+    background: linear-gradient(#fff 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+    transition: .4s, background-position 0s;
     border: none;
     cursor: pointer;
     margin-left: 5px;
+    margin-right: 50px;
     border-radius: 5%;
+  }
+
+  .profile-button:hover {
+    --p: 100%;
+    color: #2f2020;
   }
   
   .suggestions-list {
     position: absolute;
     top: 100%; /* Position the suggestion list below the input box */
-    left: 0;
-    width: 100%;
+    left: 28%;
+    width: 45%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
     background-color: #fff;
@@ -73,9 +82,15 @@
   .suggestions-list li {
     padding: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    background: linear-gradient(#282421 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+    transition: .4s, background-position 0s;
     display: flex;
     flex-direction: column;
+  }
+
+  .suggestions-list li:hover {
+    --p: 100%;
+    color: #fff;
   }
   
   .suggestion-name {
@@ -85,11 +100,6 @@
   
   .suggestion-username {
     font-size: 14px; /* Adjust font size for the username */
-    color: #777; /* Adjust color for the username */
-  }
-  
-  .suggestions-list li:hover {
-    background-color: #f5f5f5;
   }
 
   /* Adjust the font color */
