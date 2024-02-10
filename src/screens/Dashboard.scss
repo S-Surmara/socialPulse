@@ -39,6 +39,8 @@
       .friends-list {
 
         .post-container {
+          background: linear-gradient(#282421 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+          transition: .4s, background-position 0s;
           padding: 10px;
           margin-bottom: 10px;
           background-color: #fff; 
@@ -53,6 +55,11 @@
             font-size: 14px; /* Adjust font size for the username */
             color: #777; /* Adjust color for the username */
           }
+        }
+
+        .post-container:hover {
+          --p: 100%;
+          color: #fff;
         }
 
         .post-text {
